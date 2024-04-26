@@ -27,7 +27,7 @@ model MenuItem {
   veg          Boolean
   customisable Boolean
   category     Category   @relation(fields: [categoryId], references: [id])
-  options      Option[]
+  optionType   OptionType[]
   categoryId   Int
 }
 
@@ -45,12 +45,12 @@ model Option {
   price        Float
   optionType   OptionType @relation(fields: [optionTypeId], references: [id])
   optionTypeId Int
-  menuItem     MenuItem   @relation(fields: [menuItemId], references: [id])
-  menuItemId   Int
 }
 
 model OptionType {
   id      Int      @id @default(autoincrement())
   name    String
+ menuItem     MenuItem   @relation(fields: [menuItemId], references: [id])
+  menuItemId   Int
   options Option[]
 }

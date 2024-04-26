@@ -1,7 +1,9 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 type Restaurant = {
+  id: number
   name: string
   priceRangeUp: number
   priceRangeDown: number
@@ -13,8 +15,14 @@ type Restaurant = {
 const RestaurantBox: NextPage<{
   data: Restaurant
 }> = ({ data }) => {
+  const router = useRouter()
   return (
-    <div className="w-[44%] mx-auto flex flex-col justify-center items-center rounded-2xl my-2  bg-white h-52">
+    <div
+      onClick={() => {
+        router.push(`/restaurants/${data.id}`)
+      }}
+      className="w-[44%] mx-auto flex flex-col justify-center items-center rounded-2xl my-2  bg-white h-52"
+    >
       <Image
         src={data.image}
         alt="image"
