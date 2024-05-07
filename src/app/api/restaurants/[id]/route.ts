@@ -1,9 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
-export async function GET({ Request }: { Request: any }) {
+export async function GET(request: Request) {
   try {
-    const restaurantId = Request.params.id
+    const restaurantId = request.url.split('/').pop()
+    console.log({restaurantId,r:request.body,h:request.headers})
     const data = await prisma.restaurant.findUnique({
       where: {
         id: Number(restaurantId)

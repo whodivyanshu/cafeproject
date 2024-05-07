@@ -21,8 +21,8 @@ export default function Restaurant() {
       <div className="pt-20">
         <h1 className="my-3 mx-5">Results</h1>
         <div className=" flex flex-wrap  ">
-          {restaurents.map(item => (
-            <RestaurantBox data={item} key={item} />
+          {restaurents.map((item, index) => (
+            <RestaurantBox data={item} key={index} />
           ))}
         </div>
       </div>

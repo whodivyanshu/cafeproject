@@ -4,7 +4,8 @@ const nextConfig = {
     domains: [
       'images.unsplash.com',
       'bzktkujjnkxlljgpzaha.supabase.co',
-      'images.pexels.com'
+      'images.pexels.com',
+      "img.icons8.com"
     ]
   }
 }

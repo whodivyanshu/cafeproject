@@ -1,5 +1,9 @@
 'use client'
 
+import Navbar from "@/components/Navbar"
+import FoodItem from "@/components/Restaurant/FoodItem"
+import { useEffect, useState } from "react"
+
 // Generated Prisma Types
 export type MenuItem = {
   id: number
@@ -26,6 +30,7 @@ export type Option = {
   id: number
   name: string
   price: number
+  selected: boolean 
   optionTypeId: number
   optionType: OptionType
 }
@@ -51,9 +56,28 @@ export type Restaurant = {
 
 const page = ({ params }: { params: { id: number } }) => {
   const { id } = params
-  // const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
+  useEffect(() => {
+    fetch(`/api/restaurants/${id}`)
+      .then((res) => res.json())
+      .then((data) => setRestaurant(data))
+  }, [id])
+  if (!restaurant) return null
+  console.log(restaurant)
 
-  return <div>{params.id}</div>
+  return <div>
+    <Navbar/>
+    <div className="h-20"></div>
+    {restaurant?.categories?.map((category)=>{
+      return <div>
+        <h1 className="text-xl mx-5 my-5 font-bold">{category.name}</h1>
+        {category.items.map((item)=>{
+          return <FoodItem menuItem={item}/>
+        })}
+      </div>
+    })}
+    {/* <FoodItem menuItem={restaurant?.categories[0]?.items[0]}/> */}
+    </div>
 }
 
 export default page
