@@ -74,6 +74,8 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
             if (count === 0 && !menuItem.customisable) {
               addToCart();
               setCount(1);
+            } else if (count === 0 && menuItem.customisable) {
+              setCount(1);
             }
           }} className='absolute bg-[#E0E0E0] -bottom-1 rounded-lg p-0.5 w-[90%] font-semibold'>
             {count === 0 ? 'Add' : (
@@ -87,7 +89,7 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
                 <span onClick={() => {
                   if (count < 10) {
                     setCount(count + 1);
-                    addToCart(); // Increase count and add to cart
+                    addToCart();
                   }
                 }}>+</span>
               </div>
@@ -95,7 +97,7 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
           </button>
         </div>
       </div>
-      {count > 0 && menuItem.customisable && <Customization count={count} setCount={setCount} optionType={menuItem.optionType} itemName={menuItem.name} />}
+      {count > 0 && menuItem.customisable && <Customization count={count} setCount={setCount} optionType={menuItem.optionType} itemName={menuItem.name} basePrice={menuItem.price} />}
     </div>
   );
 };
