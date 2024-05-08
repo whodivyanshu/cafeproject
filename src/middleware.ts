@@ -1,25 +1,21 @@
-import { clerkMiddleware } from '@clerk/nextjs/server'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-export default clerkMiddleware()
-// {
-//   publicRoutes: [
-//     '/',
-//     '/(api|trpc)(.*)',
-//     '/restaurant',
-//     '/restaurant/food/:id',
-//     '/restaurant/:id',
-//     '/restaurant/:id/review',
-//     '/restaurant/:id/review/:id',
-//     '/restaurant/:id/review/:id/edit',
-//     '/restaurant/:id/edit',
-//     '/restaurant/:id/food',
-//     '/restaurant/:id/food/:id',
-//     '/restaurant/:id/food/:id/edit',
-//     '/restaurant/:id/food/:id/review',
-//     '/restaurant/'
-//   ]
-// }
+
+const isProtectedRoute = createRouteMatcher([
+  '/admin(.*)',
+]);
+
+
+export default clerkMiddleware((auth, req) => {
+  if (!auth().userId && isProtectedRoute(req)) {
+
+
+    return auth().redirectToSignIn();
+  }
+});
+
 
 export const config = {
   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)']
+  
 }
