@@ -14,6 +14,7 @@ export default function RootLayout({
 }>) {
   const [cartState, setCartState] = useState(defaultCartState);
 
+
   return (
     <html lang="en">
       <CartStateContext.Provider value={{ cartState,setCartState }}>

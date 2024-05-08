@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import veg from "@/Images/veg-icon.svg";
 import { IoMdClose } from 'react-icons/io';
+import { OptionType } from '@/app/restaurants/[id]/page';
 
-const Customization = ({ setCount, count }: { setCount: React.Dispatch<React.SetStateAction<number>>; count: number }) => {
+const Customization = ({ setCount, count, optionType, itemName }: { setCount: React.Dispatch<React.SetStateAction<number>>; count: number; optionType: OptionType[]; itemName: string }) => {
   const [totalAmount, setTotalAmount] = useState(139.00);
   const [isOpen, setIsOpen] = useState(count > 0);
 
@@ -11,17 +12,15 @@ const Customization = ({ setCount, count }: { setCount: React.Dispatch<React.Set
     setIsOpen(count > 0);
   }, [count]);
 
-  const basePrice250ML = 139.00;
-  const basePrice400ML = 220.00;
-  const iceCreamToppingPrice = 30.00;
-
-  const handleSizeChange = (price: number) => {
-    setTotalAmount(price);
-  };
-
-  const handleToppingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTotal = e.target.checked ? totalAmount + iceCreamToppingPrice : totalAmount - iceCreamToppingPrice;
-    setTotalAmount(newTotal);
+  const handleOptionChange = (option: any) => {
+    if (option.multiSelect) {
+      const isSelected = option.selected || false;
+      option.selected = !isSelected;
+      const price = isSelected ? -option.price : option.price;
+      setTotalAmount(totalAmount + price);
+    } else {
+      setTotalAmount(option.price);
+    }
   };
 
   return (
@@ -30,48 +29,37 @@ const Customization = ({ setCount, count }: { setCount: React.Dispatch<React.Set
         <div className="flex items-center justify-between">
           <div className='flex '>
             <Image alt='veg' src={veg} width={23} height={23} />
-            <h3 className="pl-2 text-lg">Americano</h3>
+            <h3 className="pl-2 text-lg">{itemName}</h3>
           </div>
           <div className='pr-5'>
-            <IoMdClose onClick={()=>{
-              setCount(0)
-            }} size={25} />
+            <IoMdClose onClick={() => setCount(0)} size={25} />
           </div>
         </div>
         <hr className="border-gray-300 border-0.5 my-4" />
-        <div className="space-y-4 text-sm text-gray-500">
-          <div className="flex justify-between">
-            <div>
-              <h3>250 ML</h3>
+        {optionType.map((option) => (
+          <div key={option.id} className="space-y-4 text-sm text-gray-500">
+            <h3 className='mt-4 font-bold text-black'>{option.name}</h3>
+            <div className="justify-between flex flex-col gap-3">
+              {option.options.map((opt) => (
+                <div className='flex justify-between' key={opt.id}>
+                  <div>
+                    <h3>{opt.name}</h3>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <h3>{opt.price !== 0 && "+"} ₹ {opt.price}</h3>
+                    <input
+                      type={option.multiSelect ? "checkbox" : 'radio'}
+                      name="size"
+                      checked={opt.selected || false}
+                      onChange={() => handleOptionChange(opt)}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center">
-              <h3>₹ {basePrice250ML}</h3>
-              <input checked type="radio" name="size" value={basePrice250ML} onChange={() => handleSizeChange(basePrice250ML)} />
-            </div>
+            <hr className="border-gray-300 border-0.5 my-4" />
           </div>
-          <div className="flex justify-between">
-            <div>
-              <h3>400 ML</h3>
-            </div>
-            <div className="flex items-center">
-              <h3>₹ {basePrice400ML}</h3>
-              <input type="radio" name="size" value={basePrice400ML} onChange={() => handleSizeChange(basePrice400ML)} />
-            </div>
-          </div>
-        </div>
-        <hr className="border-gray-300 border-0.5 my-4" />
-        <div className="text-sm text-gray-500">
-          <h3>Topping</h3>
-          <div className="flex justify-between">
-            <div>
-              <h3>Ice Cream Topping</h3>
-            </div>
-            <div className="flex items-center">
-              <h3>₹ {iceCreamToppingPrice}</h3>
-              <input type="checkbox" onChange={handleToppingChange} />
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
       <div className="flex justify-between items-center p-4 text-sm">
         <div className="flex items-center">

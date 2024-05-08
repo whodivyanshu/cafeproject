@@ -18,6 +18,18 @@ export type MenuItem = {
   optionType: OptionType[]
 }
 
+
+export type CartState = {
+  name: string,
+  description: string,
+  price: number,
+  image?: string | null,
+  veg: boolean,
+  customisable: boolean,
+  quantity: number,
+  optionType: OptionType[]
+  
+}
 export type Category = {
   id: number
   name: string
@@ -35,10 +47,14 @@ export type Option = {
   optionType: OptionType
 }
 
+
+
 export type OptionType = {
   id: number
   name: string
   menuItemId: number
+  required: boolean
+  multiSelect: boolean
   menuItem: MenuItem
   options: Option[]
 }
