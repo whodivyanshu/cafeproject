@@ -1,7 +1,7 @@
-import { MenuItem } from '@/app/restaurants/[id]/page'
-import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react'
+import { MenuItem } from '@/app/restaurants/[id]/page';
+import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
 
-export const defaultCartState: MenuItem[] = []
+export const defaultCartState: MenuItem[] = [];
 
 interface CartContextType {
   cartState: MenuItem[];
@@ -10,8 +10,7 @@ interface CartContextType {
 
 export const CartStateContext = createContext<CartContextType>({
   cartState: defaultCartState,
-  setCartState: () => {}
-})
+  setCartState: () => {}, 
+});
 
-export const useCartState = () => useContext(CartStateContext)
-
+export const useCartState = () => useContext(CartStateContext);

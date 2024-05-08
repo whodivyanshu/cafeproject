@@ -1,12 +1,15 @@
 "use client"
 import { MenuItem } from '@/app/restaurants/[id]/page'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import vegIcon from "@/Images/veg-icon.svg"
 import nonVegIcon from "@/Images/non-veg-icon.svg"
 import Customization from './Customization'
+import { CartStateContext } from '@/context/cart/cartContext'
 const FoodItem = ({menuItem}: {menuItem: MenuItem}) => {
   const [count, setCount] = useState(0)
+  const {cartState,setCartState} = useContext(CartStateContext)
+  console.log(cartState)
   return (
       
       <div className=' w-full '>
