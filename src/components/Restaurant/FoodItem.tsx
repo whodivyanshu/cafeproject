@@ -9,6 +9,7 @@ import { CartStateContext } from '@/context/cart/cartContext';
 const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
   const [count, setCount] = useState(0);
   const { cartState, setCartState } = useContext(CartStateContext);
+  const [openCustomize, setOpenCustomize] = useState(false);
   console.log("cartState", cartState)
   const addToCart = () => {
     console.log("addToCart called");
@@ -41,7 +42,7 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
       setCount(cartState[existingItemIndex].quantity);
     }
   
-  })
+  },[cartState])
 
   const removeFromCart = () => {
     if(count === 1){
@@ -76,6 +77,7 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
               setCount(1);
             } else if (count === 0 && menuItem.customisable) {
               setCount(1);
+              openCustomize ? setOpenCustomize(false) : setOpenCustomize(true);
             }
           }} className='absolute bg-[#E0E0E0] -bottom-1 rounded-lg p-0.5 w-[90%] font-semibold'>
             {count === 0 ? 'Add' : (
@@ -97,7 +99,7 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
           </button>
         </div>
       </div>
-      {count > 0 && menuItem.customisable && <Customization count={count} setCount={setCount} optionType={menuItem.optionType} itemName={menuItem.name} basePrice={menuItem.price} />}
+      {openCustomize && menuItem.customisable && <Customization  openCustomize={openCustomize} setOpenCustomize={setOpenCustomize} setCount={setCount} optionType={menuItem.optionType} itemName={menuItem.name} basePrice={menuItem.price} />}
     </div>
   );
 };
