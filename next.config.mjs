@@ -5,7 +5,8 @@ const nextConfig = {
       'images.unsplash.com',
       'bzktkujjnkxlljgpzaha.supabase.co',
       'images.pexels.com',
-      "img.icons8.com"
+      "img.icons8.com",
+      
     ]
   }
 }

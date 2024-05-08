@@ -6,6 +6,7 @@ import { CartStateContext, defaultCartState } from '@/context/cart/cartContext'
 import { useState } from 'react'
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
+import { Providers } from './providers'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -26,7 +27,7 @@ export default function RootLayout({
       <CartStateContext.Provider value={{ cartState,setCartState }}>
 
 
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}> <Providers>{children}</Providers></body>
       </CartStateContext.Provider>
     </html>
         </ClerkProvider>
