@@ -17,7 +17,7 @@ export default function Restaurant() {
   console.log(restaurents)
   return (
     <div className="  w-full h-full">
-      <Navbar />
+      <Navbar showCart={false} showSearch={false} />
       <div className="pt-20">
         <h1 className="my-3 mx-5">Results</h1>
         <div className=" flex flex-wrap  ">

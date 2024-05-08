@@ -82,7 +82,7 @@ const page = ({ params }: { params: { id: number } }) => {
   console.log(restaurant)
 
   return <div>
-    <Navbar/>
+    <Navbar showCart={true} showSearch={true} />
     <div className="h-20"></div>
     {restaurant?.categories?.map((category)=>{
       return <div>

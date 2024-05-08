@@ -7,15 +7,12 @@ import { CartStateContext } from '@/context/cart/cartContext';
 
 ;;const Customization = ({ setCount,  optionType, itemName, basePrice, openCustomize, setOpenCustomize }: { setCount: React.Dispatch<React.SetStateAction<number>>;optionType: OptionType[]; itemName: string; basePrice: number; openCustomize: boolean; setOpenCustomize: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const [totalAmount, setTotalAmount] = useState(basePrice);
-  // const [isOpen, setIsOpen] = useState(count > 0);
   const [optionCount, setOptionCount] = useState(1);
   const { cartState, setCartState } = useContext(CartStateContext);
 
   const [optionTypeState, setOptionTypeState] = useState(optionType);
   console.log(optionType)
-  // useEffect(() => {
-  //   setIsOpen(count > 0);
-  // }, [count]);
+
 
   useEffect(()=>{
     if(optionCount <= 0){
