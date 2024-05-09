@@ -20,7 +20,6 @@ const RestaurantBox = ({id}: {id: number}) => {
             setCartState(JSON.parse(storedCart));
         }
     }, [setCartState]);
-    const [showModal, setShowModal] = useState(false)
     
     const placeOrder = async () => {
         try {
@@ -103,7 +102,7 @@ const RestaurantBox = ({id}: {id: number}) => {
             <h1 className='font-bold text-3xl mb-4 text-center'>{cartState.length ? "Your Food Cart" : "Order Placed SuccessFully"}</h1>
 
             <div className='flex flex-col gap-4'>
-                {cartState.map((item, index) => (
+                { cartState.length &&  cartState.map((item, index) => (
                     <div key={index} className='flex bg-white rounded-lg shadow-md h-32 overflow-hidden'>
                         <div className='w-[30%]'>
                             <Image
@@ -125,7 +124,7 @@ const RestaurantBox = ({id}: {id: number}) => {
                                 >
                                     -
                                 </button>
-                                <span className='px-3'>{item.quantity}</span>
+                                <span className='px-3'>{item.quantity ? item.quantity : null}</span>
                                 <button
                                     className='px-3 py-1 bg-gray-200 rounded-md text-gray-700'
                                     onClick={() => updateQuantity(item.name, item.quantity + 1)}
@@ -159,27 +158,7 @@ const RestaurantBox = ({id}: {id: number}) => {
             <Button onClick={placeOrder}>Place Your Order</Button>
         )}
     </div>
-    {showModal && (
-         <AlertDialog
-         leastDestructiveRef={cancelRef as any}
-         motionPreset='slideInBottom'
-         onClose={onClose}
-         isOpen={isOpen}
-         isCentered
-       >
-         <AlertDialogOverlay />
- 
-         <AlertDialogContent>
-           <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
-           <AlertDialogCloseButton />
-           <AlertDialogBody>
-             Are you sure you want to discard all of your notes? 44 words will be
-             deleted.
-           </AlertDialogBody>
-           
-         </AlertDialogContent>
-       </AlertDialog>
-    )}
+   
 </div>
   )
 }
