@@ -1,19 +1,26 @@
 import Navbar from '@/components/Navbar'
 import { CartStateContext } from '@/context/cart/cartContext';
-import { Button } from '@chakra-ui/react';
+import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, useDisclosure, useToast } from '@chakra-ui/react';
 import Image from 'next/image'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+
 
 const RestaurantBox = ({id}: {id: number}) => {
     const { cartState, setCartState } = useContext(CartStateContext);
-    
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = React.useRef()
+    const toast = useToast()
+
+
+
+
     useEffect(() => {
         const storedCart = localStorage.getItem('cart');
         if (storedCart) {
             setCartState(JSON.parse(storedCart));
         }
     }, [setCartState]);
-
+    const [showModal, setShowModal] = useState(false)
     
     const placeOrder = async () => {
         try {
@@ -36,11 +43,27 @@ const RestaurantBox = ({id}: {id: number}) => {
                     status
                 }),
             });
+
+
+            
     
             if (response.ok) {
-                console.log("Order placed successfully");
+                toast({
+          title: 'Account created.',
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
+        setCartState([])
             } else {
-                console.error("Failed to place order");
+                toast({
+                    title: 'Error Creating Order',
+                    description: "There was an error creating your order",
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  })
             }
         } catch (error) {
             console.error('Error occurred while placing order:', error);
@@ -77,7 +100,7 @@ const RestaurantBox = ({id}: {id: number}) => {
     <Navbar showCart={false} showSearch={false} />
     <div className='pt-20'>
         <div className='p-2'>
-            <h1 className='font-bold text-3xl mb-4'>Your Shopping Cart</h1>
+            <h1 className='font-bold text-3xl mb-4'>{cartState.length ? "Your Food Cart" : "Your Cart is Empty"}</h1>
 
             <div className='flex flex-col gap-4'>
                 {cartState.map((item, index) => (
@@ -120,17 +143,43 @@ const RestaurantBox = ({id}: {id: number}) => {
                     </div>
                 ))}
             </div>
-
-            <div className="p-4 bg-gray-100 mt-8">
+            {cartState.length && (
+            
+                <div className="p-4 bg-gray-100 mt-8">
                 <h2 className="font-bold text-xl mb-4">Summary</h2>
                 <div className="flex justify-between items-center">
                     <p className="text-gray-700">Total Items: {totalItems}</p>
                     <p className="text-gray-700">Total Price: ₹{totalPrice}</p>
                 </div>
             </div>
+            )}
         </div>
-        <Button onClick={placeOrder}>Place Your Order</Button>
+        {cartState.length && (
+
+            <Button onClick={placeOrder}>Place Your Order</Button>
+        )}
     </div>
+    {showModal && (
+         <AlertDialog
+         leastDestructiveRef={cancelRef as any}
+         motionPreset='slideInBottom'
+         onClose={onClose}
+         isOpen={isOpen}
+         isCentered
+       >
+         <AlertDialogOverlay />
+ 
+         <AlertDialogContent>
+           <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
+           <AlertDialogCloseButton />
+           <AlertDialogBody>
+             Are you sure you want to discard all of your notes? 44 words will be
+             deleted.
+           </AlertDialogBody>
+           
+         </AlertDialogContent>
+       </AlertDialog>
+    )}
 </div>
   )
 }
