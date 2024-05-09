@@ -53,7 +53,7 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
       setCount(cartState[existingItemIndex].quantity);
     }
   
-  },[cartState])
+  },[cartState, menuItem.name])
 
   const removeFromCart = () => {
     if(count === 1){

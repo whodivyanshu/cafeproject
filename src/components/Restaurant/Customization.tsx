@@ -19,7 +19,7 @@ import { CartStateContext } from '@/context/cart/cartContext';
       setCount(0);
       setOpenCustomize(false);
     }
-  },[optionCount])
+  },[optionCount,setCount,setOpenCustomize])
 
   useEffect(() => {
     setOptionTypeState(optionType);

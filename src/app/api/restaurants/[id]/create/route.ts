@@ -11,12 +11,15 @@ export async function POST(request: NextRequest) {
 
     const orderData = await request.json(); 
     const { restaurantId, total, items, paymentMethod, status } = orderData;
-
+    console.log('orderData', restaurantId, total, items, "hello")
+    const restroId = JSON.parse(restaurantId)
+    const orderItems = JSON.stringify(items)
+    const orderTotal = JSON.parse(total)
      await prisma.order.create({
       data: {
-        restaurantId,
-        total,
-        items,
+        restaurantId: restroId,
+        total: orderTotal,
+        items: orderItems,
         paymentMethod,
         status
       }
