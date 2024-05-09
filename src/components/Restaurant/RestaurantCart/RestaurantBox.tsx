@@ -49,8 +49,8 @@ const RestaurantBox = ({id}: {id: number}) => {
     
             if (response.ok) {
                 toast({
-          title: 'Account created.',
-          description: "We've created your account for you.",
+          title: 'Order Placed',
+          description: "Your order has been placed successfully",
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -100,7 +100,7 @@ const RestaurantBox = ({id}: {id: number}) => {
     <Navbar showCart={false} showSearch={false} />
     <div className='pt-20'>
         <div className='p-2'>
-            <h1 className='font-bold text-3xl mb-4'>{cartState.length ? "Your Food Cart" : "Your Cart is Empty"}</h1>
+            <h1 className='font-bold text-3xl mb-4 text-center'>{cartState.length ? "Your Food Cart" : "Order Placed SuccessFully"}</h1>
 
             <div className='flex flex-col gap-4'>
                 {cartState.map((item, index) => (
