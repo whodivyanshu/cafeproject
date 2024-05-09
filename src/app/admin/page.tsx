@@ -2,10 +2,32 @@
 import OrderBox from '@/components/adminComponents/OrderBox'
 import { Image } from '@chakra-ui/next-js'
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Grid, GridItem, Heading, SimpleGrid, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const page = () => {
-    const [selected,setSelected] = useState('Orders')
+    const [orders, setOrders] = useState([])
+
+    useEffect(() => {
+        const fetchOrders = () => {
+            const restaurantId = 2;
+            
+            fetch('/api/admin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ restaurantId })
+            })
+            .then(res => res?.json())
+            .then(data => setOrders(data))
+            .catch(error => console.error('Error fetching orders:', error));
+        };
+    
+        fetchOrders();
+        const intervalId = setInterval(fetchOrders, 10000);
+    
+        return () => clearInterval(intervalId);
+    }, []);
   return (
     <Grid
     

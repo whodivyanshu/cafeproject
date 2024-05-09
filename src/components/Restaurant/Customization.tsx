@@ -44,6 +44,7 @@ import { CartStateContext } from '@/context/cart/cartContext';
       const updatedCart = [...cartState];
       updatedCart[existingItemIndex].quantity += optionCount;
       setCartState(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     } else {
       setCartState([
         ...cartState,
@@ -58,6 +59,22 @@ import { CartStateContext } from '@/context/cart/cartContext';
           image: "",
         },
       ]);
+      localStorage.setItem(
+        "cart",
+        JSON.stringify([
+          ...cartState,
+          {
+            name: itemName,
+            price: totalAmount,
+            quantity: optionCount,
+            customisable: true,
+            optionType: optionTypeState,
+            veg: true,
+            description: "",
+            image: "",
+          },
+        ])
+      );
     }
     setCount(optionCount)
     setOpenCustomize(false);

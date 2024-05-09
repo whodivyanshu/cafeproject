@@ -82,7 +82,7 @@ const page = ({ params }: { params: { id: number } }) => {
   console.log(restaurant)
 
   return <div>
-    <Navbar showCart={true} showSearch={true} />
+    <Navbar showCart={true} showSearch={true} restaurantId={id} />
     <div className="h-20"></div>
     {restaurant?.categories?.map((category)=>{
       return <div>
@@ -92,7 +92,6 @@ const page = ({ params }: { params: { id: number } }) => {
         })}
       </div>
     })}
-    {/* <FoodItem menuItem={restaurant?.categories[0]?.items[0]}/> */}
     </div>
 }
 

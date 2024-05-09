@@ -21,6 +21,7 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
       const updatedCart = [...cartState];
       updatedCart[existingItemIndex].quantity += 1;
       setCartState(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
     } else {
 
       setCartState([...cartState, {
@@ -33,6 +34,16 @@ const FoodItem = ({ menuItem }: { menuItem: MenuItem }) => {
         description: menuItem.description,
         image: menuItem.image
       }]);
+      localStorage.setItem('cart', JSON.stringify([...cartState, {
+        name: menuItem.name,
+        price: menuItem.price,
+        quantity: 1,
+        customisable: menuItem.customisable,
+        optionType: menuItem.optionType,
+        veg: menuItem.veg,
+        description: menuItem.description,
+        image: menuItem.image
+      }]));
     }
   };
 

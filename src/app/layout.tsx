@@ -20,16 +20,18 @@ export default function RootLayout({
 
 
   return (
+    <html lang="en">
+      <body className={inter.className}>
         <ClerkProvider appearance={{
           baseTheme: dark
         }}>
-    <html lang="en">
-      <CartStateContext.Provider value={{ cartState,setCartState }}>
-
-
-      <body className={inter.className}> <Providers>{children}</Providers></body>
-      </CartStateContext.Provider>
-    </html>
+          <Providers>
+            <CartStateContext.Provider value={{ cartState, setCartState }}>
+              {children}
+            </CartStateContext.Provider>
+          </Providers>
         </ClerkProvider>
+      </body>
+     </html>
   )
 }
